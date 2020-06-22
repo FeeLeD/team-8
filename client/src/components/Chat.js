@@ -33,6 +33,7 @@ let socket;
 const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
     const [onlineMessages, setOnlineMessages] = useState([]);
     const [usersOnline, updateUsersOnline] = useState([]);
+    const [typing, setTyping] = useState('');
 
     useEffect(() => {
         socket = io(URL);
@@ -50,6 +51,15 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
         socket.on('message', message => {
             setOnlineMessages(onlineMessages => [...onlineMessages, message])
         });
+
+        socket.on('typing', login => {
+            setTyping(() => login)
+        })
+
+        socket.on('stopTyping', login => {
+            setTyping(() => '')
+        })
+
         getAllRooms();
     }, [])
 
@@ -70,6 +80,14 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
         socket.emit('sendMessage', messageInfo);
     };
 
+    const keyPressing = (login, currentRoomId) => {
+        socket.emit('typing', {login, roomId: currentRoomId});
+
+        setTimeout(() => {
+            socket.emit('stopTyping', {login, roomId: currentRoomId});
+        }, 1000)
+    }
+
     if (!isAuthenticated)
         return <Redirect to='/' />
 
@@ -87,8 +105,8 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
                 <div className="status">
                     <span className="name">Me<span className="blue">ss</span>enger</span>
                 </div>
-                <Messages onlineMessages={onlineMessages} />
-                <Input sendMessageToRoom={sendMessageToRoom} />
+                <Messages onlineMessages={onlineMessages} typing={typing} />
+                <Input sendMessageToRoom={sendMessageToRoom} keyPressing={keyPressing} />
 
             </div>
             {/* <p>Copyright © 2020  Dream team Group RI-370005. All rights reserved.</p> */}

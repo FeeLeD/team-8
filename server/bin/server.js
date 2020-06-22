@@ -24,6 +24,14 @@ io.on('connection', socket => {
     io.to(roomId).emit('message', { sender: login, content: message})
   });
 
+  socket.on('typing', ({ login, roomId }) => {
+    io.to(roomId).emit('typing', login);
+  });
+
+  socket.on('stopTyping', ({ login, roomId }) => {
+    io.to(roomId).emit('stopTyping', login);
+  });
+
   socket.on('disconnect', () => {
     console.log('user has left')
   });

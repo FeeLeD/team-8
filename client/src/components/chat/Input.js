@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addMessage } from '../../actions/chat'
 
-const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage }) => {
+const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage, keyPressing }) => {
 
     const [messageInfo, setMessageInfo] = useState({
         login: userData.login,
@@ -39,7 +39,7 @@ const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage }) => {
                     placeholder="Написать сообщение..."
                     value={messageInfo.message}
                     onChange={e => setMessageInfo({ ...messageInfo, message: e.target.value })}
-                    onKeyPress={e => e.key === 'Enter' ? sendMessage(e) : null}
+                    onKeyPress={e => e.key === 'Enter' ? sendMessage(e) : keyPressing(userData.login, currentRoomId)}
                     type="text" />
                 <button onClick={e => sendMessage(e)}>...</button>
             </form>

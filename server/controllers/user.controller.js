@@ -71,7 +71,7 @@ const create = async (req, res) => {
       to: email,
       subject: "Подтверждение регистрации",
       text:
-        "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
+        "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com/confirmation/" + token.token
     };
     transporter.sendMail(mailOptions, (err) => {
       if (err) {
@@ -215,7 +215,7 @@ const resend = async (req, res) => {
     to: user.email,
     subject: "Подтверждение регистрации",
     text:
-      "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
+      "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com/confirmation/" + token.token
   };
   transporter.sendMail(mailOptions, (err) => {
     if (err) {

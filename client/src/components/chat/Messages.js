@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 
 import Message from './Message';
 
-const Messages = ({ userData: { login }, messagesFromBase, onlineMessages }) => {
+const Messages = ({ userData: { login }, onlineMessages, typing }) => {
 
     useEffect(() => {
         const messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     })
-    
+
     return (
+
         <div id="messages" className="messages">
             {
                 onlineMessages.map((message, index) =>
@@ -20,6 +21,9 @@ const Messages = ({ userData: { login }, messagesFromBase, onlineMessages }) => 
                         type={message.sender === login ? "outcomingLetterWrapper" : "incomingLetterWrapper"}
                         content={message.content}
                     />)
+            }
+            {
+                typing !== '' && <p>{typing} печатает...</p>
             }
         </div>
     );
@@ -30,8 +34,7 @@ Messages.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    messagesFromBase: state.chat.messages,
-    userData: state.login.userData,
+    userData: state.login.userData
 });
 
 export default connect(mapStateToProps)(Messages);
