@@ -58,11 +58,7 @@ const getAllRooms = async (req, res) => {
                 rooms[i].users.splice(0, 1);
                 rooms[i].users.push(userData);
             }
-            console.log('1');
         }
-
-        console.log('2');
-        console.log(rooms);
 
         res.json(rooms);
     } catch (err) {

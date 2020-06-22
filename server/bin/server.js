@@ -1,9 +1,6 @@
 import app from '../app';
 import config from '../config/config'
-const socket = require('socket.io');
-
-
-
+import socket from 'socket.io';
 
 const expressServer = app.listen(config.port, (err) => {
   if (err) {
@@ -14,32 +11,20 @@ const expressServer = app.listen(config.port, (err) => {
 
 const io = socket(expressServer);
 
-io.on("connection", socket => {
-  console.log("a user is connected!")
-  socket.on("join", async room => {
-     console.log("user join a room")
-    socket.join(room);
-    io.emit("roomJoined", room);
+io.on('connection', socket => {
+  socket.on('join', ({ login }, callback) => {
+    socket.broadcast.emit('join', login);
   });
 
-  socket.on("disconnect", async room => {
-    console.log("a user is disconnected!")
- });
-
-  socket.on("message", async data => {
-    const { chatRoomName, author, message } = data;
-
-    const chatRoom = await models.chatRoom.findAll({
-      where: { name: chatRoomName },
-    });
-
-    const chatRoomId = chatRoom[0].id;
-
-    const chatMessage = await models.message.create({
-      chatRoomId,
-      author,
-      message: message,
-    });
-    io.emit("newMessage", chatMessage);
+  socket.on('joinRoom', ({ login, roomId }) => {
+    socket.join(roomId);
   });
-});
+
+  socket.on('sendMessage', ({ login, message, roomId }) => {
+    io.to(roomId).emit('message', { sender: login, content: message})
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user has left')
+  });
+})

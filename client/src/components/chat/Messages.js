@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import socketIOClient from 'socket.io-client';
+
 import Message from './Message';
 
-const Messages = ({ messages, userData: {_id} }) => {
-    const [data, setData] = useState('');
+const Messages = ({ userData: { _id, login }, socket }) => {
+    const [messages, setMessages] = useState([]);
 
-    /* 
     useEffect(() => {
-        const socket = socketIOClient('http://localhost:5000');
-        socket.on('connection', data => {
-            setData(data);
-        }, []);
-    })*/
+        if (socket) {
+            socket.on('message', message => {
+                setMessages([...messages, message])
+            });
+        }
+    }, [messages]);
 
     return (
         <div className="messages">
             {
-                messages.map((message, index) => 
+                messages.map((message, index) =>
                     <Message
                         key={index}
-                        type={message.sender === _id ? "outcomingLetterWrapper" : "incomingLetterWrapper"}
-                        content={message.content} 
+                        type={message.sender === login ? "outcomingLetterWrapper" : "incomingLetterWrapper"}
+                        content={message.content}
                     />
-                    )
+                )
             }
         </div>
     );
@@ -36,7 +36,7 @@ Messages.propTypes = {
 
 const mapStateToProps = state => ({
     messages: state.chat.messages,
-    userData: state.login.userData
+    userData: state.login.userData,
 });
 
 export default connect(mapStateToProps)(Messages);

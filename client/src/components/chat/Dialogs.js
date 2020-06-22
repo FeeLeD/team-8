@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Dialog from './Dialog';
 
-const Dialogs = ({ rooms, users, toSearchFor }) => {
+const Dialogs = ({ rooms, users, toSearchFor, socket, usersOnline }) => {
 
     return (
         <div className="dialogs">
@@ -19,6 +19,8 @@ const Dialogs = ({ rooms, users, toSearchFor }) => {
                             key={index}
                             roomId={room._id}
                             users={room.users}
+                            socket={socket}
+                            usersOnline={usersOnline}
                         />)
             }
         </div>

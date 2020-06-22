@@ -3,16 +3,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAllMessages, createChat, clearSearch, getAllRooms } from '../../actions/chat';
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData }) => {
+
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, socket, usersOnline }) => {
+
+    const joinRoom = (login, roomId) => {
+        socket.emit('joinRoom', { login, roomId });
+    }
 
     const onClick = e => {
         if (user) {
-            createChat(userData._id, user._id).then(res => getAllRooms());
-            console.log('here')
+            createChat(userData._id, user._id).then(res => {
+                getAllRooms();
+                joinRoom(userData.login, roomId);
+            });
             clearSearch();
         }
-        else
+        else {
             getAllMessages(roomId);
+            joinRoom(userData.login, roomId);
+        }
     }
 
     return (
@@ -27,8 +36,17 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
                         </Fragment>
                         :
                         <Fragment>
-                            <span className="name">{users.map(user => user.login)}</span>
-                            <div className="check"></div>
+                            {
+                                users.map((user, index) =>
+                                    <Fragment key={index} >
+                                        <span className="name">{user.login}</span>
+                                        {usersOnline.includes(user.login) ?
+                                            <p className="online">online</p> :
+                                            <p className="offline">offline</p>
+                                        }
+                                    </Fragment>
+                                )
+                            }
                         </Fragment>
                 }
             </div>

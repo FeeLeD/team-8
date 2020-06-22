@@ -214,16 +214,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.chatWrapper .check {
-    width: 0.938em;
-    height: 0.938em;
-    background-color: #F44336;
-    border-radius: 100%;
+.chatWrapper p {
+    font-size: .9em;
+}
+.chatWrapper .online {
+    color: green;
+}
+.chatWrapper .offline {
+    color: red;
 }
 /* Шрифты*/
 .chatWrapper .name {
     font-weight: 500;
     color: #202020;
+}
+.chatWrapper .blue {
+    color: #4ca5ff
 }
 .chatWrapper .info {
     font-weight: 300;
@@ -333,12 +339,16 @@
     border-radius: 0.7em 0 0 0.7em;
     outline: none;
     background: #FFFFFF;
-    color: #9E9C9C;
+}
+.chatWrapper .messageForm .noRooms {
+    border-radius: 0.7em;
+    cursor: cell;
 }
 .chatWrapper .messageForm button{
     width: 5%;
     border: none;
     background: #4CA5FF;
+    color: #FFFFFF;
     border-radius: 0 0.7em 0.7em 0;
     cursor: pointer;
 }
