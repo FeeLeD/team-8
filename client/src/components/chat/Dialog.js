@@ -4,12 +4,7 @@ import PropTypes from 'prop-types';
 import { getAllMessages, createChat, clearSearch, getAllRooms } from '../../actions/chat';
 
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, socket, usersOnline }) => {
-
-    const joinRoom = (login, roomId) => {
-        if (socket)
-            socket.emit('joinRoom', { login, roomId });
-    }
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, usersOnline }) => {
 
     const onClick = e => {
         if (user) {

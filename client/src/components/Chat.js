@@ -19,7 +19,7 @@ if (localStorage.token) {
     setAuthToken(localStorage.token);
 }
 
-let URL; 
+let URL;
 if ((window.location.href.includes('localhost'))) {
     URL = 'http://localhost:3000/';
 }
@@ -30,24 +30,45 @@ console.log(URL)
 
 let socket;
 
-const Chat = ({ getAllRooms, isAuthenticated, userData, location }) => {
+const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
+    const [onlineMessages, setOnlineMessages] = useState([]);
     const [usersOnline, updateUsersOnline] = useState([]);
 
     useEffect(() => {
         socket = io(URL);
-    }, [URL, location.search])
+    }, [URL])
 
     useEffect(() => {
         const { login } = userData;
         if (login)
             socket.emit('join', { login }, () => { });
 
-            socket.on('join', login => {
-                updateUsersOnline(usersOnline => [...usersOnline, login]);
-            });
+        socket.on('join', login => {
+            updateUsersOnline(usersOnline => [...usersOnline, login]);
+        });
+
+        socket.on('message', message => {
+            setOnlineMessages(onlineMessages => [...onlineMessages, message])
+        });
         getAllRooms();
     }, [])
 
+    useEffect(() => {
+        const base = messagesFromBase.map((message, index) => ({
+            sender: message.login,
+            content: message.content
+        }));
+
+        setOnlineMessages(base);
+    }, [messagesFromBase])
+
+    const joinRoom = (login, roomId) => {
+        socket.emit('joinRoom', { login, roomId });
+    }
+
+    const sendMessageToRoom = messageInfo => {
+        socket.emit('sendMessage', messageInfo);
+    };
 
     if (!isAuthenticated)
         return <Redirect to='/' />
@@ -60,15 +81,15 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, location }) => {
                     <BurgerMenu />
                     <Search />
                 </div>
-                <Dialogs socket={socket} usersOnline={usersOnline} />
+                <Dialogs joinRoom={joinRoom} usersOnline={usersOnline} />
             </div>
             <div className="right">
                 <div className="status">
                     <span className="name">Me<span className="blue">ss</span>enger</span>
                 </div>
                 <div className="main">
-                    <Messages socket={socket} />
-                    <Input socket={socket} />
+                    <Messages onlineMessages={onlineMessages} />
+                    <Input sendMessageToRoom={sendMessageToRoom} />
                 </div>
             </div>
             {/* <p>Copyright © 2020  Dream team Group RI-370005. All rights reserved.</p> */}
@@ -84,7 +105,8 @@ Chat.propTypes = {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.login.isAuthenticated,
-    userData: state.login.userData
+    userData: state.login.userData,
+    messagesFromBase: state.chat.messages
 });
 
 export default connect(mapStateToProps, { getAllRooms })(Chat);

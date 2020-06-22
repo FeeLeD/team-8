@@ -4,23 +4,7 @@ import PropTypes from 'prop-types';
 
 import Message from './Message';
 
-const Messages = ({ userData: { login }, socket, messagesFromBase }) => {
-    const [onlineMessages, setOnlineMessages] = useState([]);
-
-    if (socket) {
-        socket.on('message', message => {
-            setOnlineMessages([...onlineMessages, message])
-        });
-    }
-
-    useEffect(() => {
-        const base = messagesFromBase.map((message, index) => ({
-            sender: message.login,
-            content: message.content
-        }));
-
-        setOnlineMessages(base);
-    }, [messagesFromBase])
+const Messages = ({ userData: { login }, messagesFromBase, onlineMessages }) => {
 
     return (
         <div className="messages">
