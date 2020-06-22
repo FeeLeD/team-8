@@ -19,7 +19,8 @@ if (localStorage.token) {
     setAuthToken(localStorage.token);
 }
 
-const URL = 'http://localhost:3000';
+const URL = 'https://team-8-messenger.herokuapp.com/';
+
 let socket;
 
 const Chat = ({ getAllRooms, isAuthenticated, userData, location }) => {
