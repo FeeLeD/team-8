@@ -23,7 +23,7 @@ const Messages = ({ userData: { login }, onlineMessages, typing }) => {
                     />)
             }
             {
-                typing !== '' && <p>{typing} печатает...</p>
+                (typing !== '' && typing !== login) && <p className="typing">{typing} печатает...</p>
             }
         </div>
     );

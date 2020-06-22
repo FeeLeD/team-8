@@ -37,8 +37,8 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
                                     <Fragment key={index} >
                                         <span className="name">{user.login}</span>
                                         {usersOnline.includes(user.login) ?
-                                            <p className="online">online</p> :
-                                            <p className="offline">offline</p>
+                                            <p className="online">...</p> :
+                                            <p className="offline">...</p>
                                         }
                                     </Fragment>
                                 )

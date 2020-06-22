@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import setAuthToken from '../utils/setAuthToken';
 import { getAllRooms } from '../actions/chat';
 import io from "socket.io-client";
+import { setAlert } from '../actions/alert';
 
 import Profile from './chat/Profile';
 import BurgerMenu from './chat/BurgerMenu';
@@ -30,7 +31,7 @@ console.log(URL)
 
 let socket;
 
-const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
+const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase, setAlert }) => {
     const [onlineMessages, setOnlineMessages] = useState([]);
     const [usersOnline, updateUsersOnline] = useState([]);
     const [typing, setTyping] = useState('');
@@ -41,11 +42,17 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
 
     useEffect(() => {
         const { login } = userData;
-        if (login)
-            socket.emit('join', { login }, () => { });
+        if (login) {
+            socket.emit('join', { login });
+        }
+        console.log(login)
+    }, [userData]);
+
+    useEffect(() => {
 
         socket.on('join', login => {
-            updateUsersOnline(usersOnline => [...usersOnline, login]);
+            if (login !== undefined)
+                setAlert(`${login} присоединился к чату!`, 'success', 2000);
         });
 
         socket.on('message', message => {
@@ -53,12 +60,12 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
         });
 
         socket.on('typing', login => {
-            setTyping(() => login)
-        })
+            setTyping(() => login);
+        });
 
         socket.on('stopTyping', login => {
-            setTyping(() => '')
-        })
+            setTyping(() => '');
+        });
 
         getAllRooms();
     }, [])
@@ -81,11 +88,11 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
     };
 
     const keyPressing = (login, currentRoomId) => {
-        socket.emit('typing', {login, roomId: currentRoomId});
+        socket.emit('typing', { login, roomId: currentRoomId });
 
         setTimeout(() => {
-            socket.emit('stopTyping', {login, roomId: currentRoomId});
-        }, 1000)
+            socket.emit('stopTyping', { login, roomId: currentRoomId });
+        }, 2000)
     }
 
     if (!isAuthenticated)
@@ -117,7 +124,8 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
 Chat.propTypes = {
     getAllRooms: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    userData: PropTypes.object.isRequired
+    userData: PropTypes.object.isRequired,
+    setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -126,4 +134,4 @@ const mapStateToProps = state => ({
     messagesFromBase: state.chat.messages
 });
 
-export default connect(mapStateToProps, { getAllRooms })(Chat);
+export default connect(mapStateToProps, { getAllRooms, setAlert })(Chat);

@@ -292,6 +292,10 @@
     padding: 1em;
     overflow-y: auto;
 }
+.chatWrapper .typing {
+    margin: 1em;
+    bottom: 0;
+}
 /* Входящие сообщения */
 .chatWrapper .incomingLetterWrapper {
     display: flex;
