@@ -67,8 +67,8 @@ const create = async (req, res) => {
     //Send email
     const transporter = nodemailer.createTransport(config.smtpConfig);
     const mailOptions = {
-      from: "Dream team",
-      to: config.smtpConfig.auth.user,
+      from: "dreamteammessenger@gmail.com",
+      to: email,
       subject: "Подтверждение регистрации",
       text:
         "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
@@ -79,6 +79,7 @@ const create = async (req, res) => {
           errors: [
             {
               msg: "По техническим причинам e-mail не был отправлен",
+              err: err.message
             },
           ],
         });
@@ -210,11 +211,11 @@ const resend = async (req, res) => {
   //Send email
   const transporter = nodemailer.createTransport(config.smtpConfig);
   const mailOptions = {
-    from: "Dream team",
-    to: config.smtpConfig.auth.user,
+    from: "dreamteammessenger@gmail.com",
+    to: user.email,
     subject: "Подтверждение регистрации",
     text:
-    "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
+      "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
   };
   transporter.sendMail(mailOptions, (err) => {
     if (err) {
@@ -222,6 +223,7 @@ const resend = async (req, res) => {
         errors: [
           {
             msg: "По техническим причинам e-mail не был отправлен",
+            err: err.message
           },
         ],
       });

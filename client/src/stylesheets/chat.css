@@ -1,5 +1,30 @@
 @import "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap";
 
+::-webkit-scrollbar {
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+  
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
 .chatWrapper {
     font-family: "Roboto", sans-serif;
     margin: 0.05em auto 0.05em auto;
@@ -50,7 +75,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 10vh;
+    top: 0;
     background-color: #fefefe;
     min-width: 190px;
     box-shadow: 3px 6px 12px 0px rgba(0, 0, 0, 0.08);
@@ -184,9 +209,10 @@
 
 /* Диалоги */
 .chatWrapper .dialogs {
-    flex-grow: 1;
+    height: 91vh;
     border-top: 0.063em solid #4CA5FF;
     background-color:#FEFEFE;
+    overflow-y: auto;
 }
 /* Диалог */
 .chatWrapper .dialog {

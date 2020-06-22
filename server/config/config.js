@@ -4,12 +4,13 @@ const config = {
     jwtSecret: process.env.JWT_SECRET || "YOUR_secret_key",
     mongoUri: 'mongodb+srv://user:QgOVTyn4wOcG8MbV@messenger-2geth.mongodb.net/test?retryWrites=true&w=majority',
     smtpConfig: {
-      host: "smtp.yandex.ru",
-      port: 465,
-      secure: true, // use SSL
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      secure: false,
+      port: 25,
       auth: {
-          user: "dreamteammessenger@yandex.ru",
-          pass: "brtbzixnwacwbazn"
+          user: "dreamteammessenger@gmail.com",
+          pass: "TBH-qG9-d7r-zi81"
       },
       tls: {
           rejectUnauthorized: false
