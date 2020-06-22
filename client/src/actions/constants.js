@@ -15,3 +15,4 @@ export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const SEARCH = 'SEARCH';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 export const CREATE_CHAT = 'CREATE_CHAT';
+export const ADD_MESSAGE = 'ADD_MESSAGE';

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addMessage } from '../../actions/chat';
 
-const Input = ({ userData, currentRoomId, socket }) => {
+const Input = ({ userData, currentRoomId, socket, addMessage }) => {
 
     const [messageInfo, setMessageInfo] = useState({
         login: userData.login,
@@ -15,9 +16,10 @@ const Input = ({ userData, currentRoomId, socket }) => {
     }, [userData, currentRoomId]);
 
     const sendMessage = (e) => {
+        addMessage({ chatId: currentRoomId, login: userData.login, content: messageInfo.message});
         e.preventDefault();
         if (socket)
-            socket.emit('sendMessage', messageInfo, () => setMessageInfo({ ...messageInfo, message: '' }));
+            socket.emit('sendMessage', messageInfo);
     };
 
     if (currentRoomId === 0) {
@@ -47,7 +49,8 @@ const Input = ({ userData, currentRoomId, socket }) => {
 }
 
 Input.propTypes = {
-    userData: PropTypes.object.isRequired
+    userData: PropTypes.object.isRequired,
+    addMessage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -55,4 +58,4 @@ const mapStateToProps = state => ({
     currentRoomId: state.chat.currentRoomId
 });
 
-export default connect(mapStateToProps)(Input);
+export default connect(mapStateToProps, { addMessage })(Input);

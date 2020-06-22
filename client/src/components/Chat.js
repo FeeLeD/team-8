@@ -26,6 +26,7 @@ if ((window.location.href.includes('localhost'))) {
 else {
     URL = 'https://team-8-messenger.herokuapp.com/';
 }
+console.log(URL)
 
 let socket;
 

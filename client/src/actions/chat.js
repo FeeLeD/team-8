@@ -5,7 +5,8 @@ import {
     GET_ALL_USERS, 
     SEARCH, 
     CLEAR_SEARCH, 
-    CREATE_CHAT } from './constants';
+    CREATE_CHAT,
+    ADD_MESSAGE } from './constants';
 
 // Get all chat rooms
 export const getAllRooms = () => async dispatch => {
@@ -95,6 +96,24 @@ export const createChat = (senderId, receiverId) => async dispatch => {
                 messages: []
             }
         })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const addMessage = ({ chatId, login, content }) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ chatId, login, content });
+
+    try {
+        await axios.post('/chat/messages/', body, config);
+
+        dispatch({ type: ADD_MESSAGE })
     } catch (err) {
         console.log(err);
     }

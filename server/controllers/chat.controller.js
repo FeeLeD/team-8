@@ -74,12 +74,12 @@ const getAllRooms = async (req, res) => {
 }
 
 const addMessage = async (req, res) => {
-    const { chatId, senderId, content } = req.body;
+    const { chatId, login, content } = req.body;
 
     try {
         const message = new Message({
             chatRoomId: chatId,
-            sender: senderId,
+            login: login,
             content
         });
 

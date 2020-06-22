@@ -5,9 +5,8 @@ const MessageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'chatroom'
     },
-    sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+    login: {
+        type: String
     },
     content: {
         type: String

@@ -4,7 +4,8 @@ import {
     GET_ALL_USERS, 
     SEARCH, 
     CLEAR_SEARCH,
-    CREATE_CHAT } from '../actions/constants';
+    CREATE_CHAT,
+    ADD_MESSAGE } from '../actions/constants';
 
 const initialState = {
     rooms: [],
@@ -52,6 +53,10 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 toSearchFor: ''
+            }
+        case ADD_MESSAGE:
+            return {
+                ...state
             }
         default:
             return state;
