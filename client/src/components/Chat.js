@@ -45,8 +45,7 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase, setAle
         if (login) {
             socket.emit('join', { login });
         }
-        console.log(login)
-    }, [userData]);
+    }, [userData.login]);
 
     useEffect(() => {
 
