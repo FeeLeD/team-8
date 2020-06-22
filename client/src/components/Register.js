@@ -30,7 +30,7 @@ const Register = ({ setAlert, register, isRegistered, isAuthenticated }) => {
 
     // Redirect
     if (isAuthenticated) 
-        return <Redirect to="/chat"/>
+        return <Redirect to="/messenger"/>
 
     if (isRegistered)
         return <Redirect to="/thanks" />

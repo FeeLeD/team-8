@@ -6,8 +6,13 @@ import Message from './Message';
 
 const Messages = ({ userData: { login }, messagesFromBase, onlineMessages }) => {
 
+    useEffect(() => {
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    })
+    
     return (
-        <div className="messages">
+        <div id="messages" className="messages">
             {
                 onlineMessages.map((message, index) =>
                     <Message

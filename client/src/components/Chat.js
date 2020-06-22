@@ -87,10 +87,9 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase }) => {
                 <div className="status">
                     <span className="name">Me<span className="blue">ss</span>enger</span>
                 </div>
-                <div className="main">
-                    <Messages onlineMessages={onlineMessages} />
-                    <Input sendMessageToRoom={sendMessageToRoom} />
-                </div>
+                <Messages onlineMessages={onlineMessages} />
+                <Input sendMessageToRoom={sendMessageToRoom} />
+
             </div>
             {/* <p>Copyright © 2020  Dream team Group RI-370005. All rights reserved.</p> */}
         </div>

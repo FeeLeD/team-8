@@ -6,7 +6,8 @@ import {
     SEARCH, 
     CLEAR_SEARCH, 
     CREATE_CHAT,
-    ADD_MESSAGE } from './constants';
+    ADD_MESSAGE,
+    ACTIVE_DIALOG } from './constants';
 
 // Get all chat rooms
 export const getAllRooms = () => async dispatch => {
@@ -117,4 +118,13 @@ export const addMessage = ({ chatId, login, content }) => async dispatch => {
     } catch (err) {
         console.log(err);
     }
+}
+
+export const setActiveDialog = dialogId => dispatch => {
+    dispatch({ 
+        type: ACTIVE_DIALOG,
+        payload: {
+            dialogId: dialogId
+        }
+    })
 }

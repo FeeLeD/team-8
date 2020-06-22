@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT } from '../actions/constants';
+import { LOGIN_SUCCESS, LOGIN_FAIL, REMOVE_WRONG_DATA, USER_LOADED, AUTH_ERROR, LOGOUT } from '../actions/constants';
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -34,6 +34,11 @@ export default (state = initialState, action) => {
                 isAuthenticated: false,
                 userData: {},
                 needVerification: payload.needVerification
+            }
+        case REMOVE_WRONG_DATA: 
+            return {
+                ...state,
+                isWrongData: false
             }
         case LOGOUT:
         case AUTH_ERROR:

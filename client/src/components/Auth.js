@@ -27,7 +27,7 @@ const Auth = ({ login, isAuthenticated, isWrongData, needVerification }) => {
     }
 
     if (isAuthenticated) {
-        return <Redirect to="/chat"/>
+        return <Redirect to="/messenger"/>
     }
 
     return (

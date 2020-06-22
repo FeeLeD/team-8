@@ -17,6 +17,7 @@ const Dialogs = ({ rooms, users, toSearchFor, joinRoom, usersOnline }) => {
                     rooms.map((room, index) =>
                         <Dialog
                             key={index}
+                            id={'dialog' + index}
                             roomId={room._id}
                             users={room.users}
                             joinRoom={joinRoom}

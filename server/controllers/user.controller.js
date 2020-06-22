@@ -68,10 +68,10 @@ const create = async (req, res) => {
     const transporter = nodemailer.createTransport(config.smtpConfig);
     const mailOptions = {
       from: "Dream team",
-      to: email,
+      to: config.smtpConfig.auth.user,
       subject: "Подтверждение регистрации",
       text:
-        "Привет!\nДля подтверждения регистрации перейди по ссылке: https://tinkoff-messenger.herokuapp.com/confirmation/" + token.token
+        "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
     };
     transporter.sendMail(mailOptions, (err) => {
       if (err) {
@@ -211,10 +211,10 @@ const resend = async (req, res) => {
   const transporter = nodemailer.createTransport(config.smtpConfig);
   const mailOptions = {
     from: "Dream team",
-    to: user.email,
+    to: config.smtpConfig.auth.user,
     subject: "Подтверждение регистрации",
     text:
-    "Привет!\nДля подтверждения регистрации перейди по ссылке: https://tinkoff-messenger.herokuapp.com/confirmation/" + token.token
+    "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com//confirmation/" + token.token
   };
   transporter.sendMail(mailOptions, (err) => {
     if (err) {
@@ -244,22 +244,6 @@ const list = async (req, res) => {
   }
 };
 
-
-/*
-//Changed user data for a specific use method
-const update = (req, res, next) => {
-  res.json({
-    msg: "Changed user data for a specific use method"
-  })
-};
-
-//Delete a specific user from the database method
-const remove = (req, res, next) => {
-  res.json({
-    msg: "Delete a specific user from the database method"
-  })
-};
-*/
 
 export default {
   read,

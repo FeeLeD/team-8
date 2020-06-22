@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT } from './constants';
+import { LOGIN_SUCCESS, LOGIN_FAIL, REMOVE_WRONG_DATA, USER_LOADED, AUTH_ERROR, LOGOUT } from './constants';
 import setAuthToken from '../utils/setAuthToken';
 
 // Load user
@@ -55,6 +55,10 @@ export const login = (email, password) => async dispatch => {
                 needVerification
             }
         });
+
+        setTimeout(() => dispatch({
+            type: REMOVE_WRONG_DATA
+        }), 2000)
     }
 }
 

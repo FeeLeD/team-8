@@ -19,6 +19,7 @@ const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage }) => {
         addMessage({ chatId: currentRoomId, login: userData.login, content: messageInfo.message });
         e.preventDefault();
         sendMessageToRoom(messageInfo);
+        setMessageInfo([{...messageInfo, message: ''}])
     };
 
     if (currentRoomId === 0) {

@@ -24,7 +24,7 @@ const RegisterVer = ({ repeatSending, email, isAuthenticated }) => {
 
     // Redirect 
     if (isAuthenticated)
-        return <Redirect to="/chat"/>
+        return <Redirect to="/messenger"/>
 
     return (
         <div className="RegVer">

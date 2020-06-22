@@ -5,14 +5,16 @@ import {
     SEARCH, 
     CLEAR_SEARCH,
     CREATE_CHAT,
-    ADD_MESSAGE } from '../actions/constants';
+    ADD_MESSAGE, 
+    ACTIVE_DIALOG} from '../actions/constants';
 
 const initialState = {
     rooms: [],
     currentRoomId: 0,
     messages: [],
     users: [],
-    toSearchFor: ''
+    toSearchFor: '',
+    activeDialogId: ''
 };
 
 export default function (state = initialState, action) {
@@ -57,6 +59,11 @@ export default function (state = initialState, action) {
         case ADD_MESSAGE:
             return {
                 ...state
+            }
+        case ACTIVE_DIALOG:
+            return {
+                ...state,
+                activeDialogId: payload.dialogId
             }
         default:
             return state;

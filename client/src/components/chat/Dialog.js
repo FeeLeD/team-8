@@ -1,16 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAllMessages, createChat, clearSearch, getAllRooms } from '../../actions/chat';
+import { getAllMessages, createChat, clearSearch, getAllRooms, setActiveDialog } from '../../actions/chat';
 
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, usersOnline }) => {
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, usersOnline, id, activeDialogId, setActiveDialog }) => {
 
     const onClick = e => {
+        setActiveDialog(id);
         if (user) {
             createChat(userData._id, user._id).then(res => {
                 getAllRooms();
-                joinRoom(userData.login, roomId);
             });
             clearSearch();
         }
@@ -21,7 +21,7 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
     }
 
     return (
-        <div className="dialog" onClick={e => onClick(e)}>
+        <div id={id} className={ id === activeDialogId ? "dialog active" : "dialog" } onClick={e => onClick(e)}>
             <div className="avatar" />
             <div className="infoDialog">
                 {
@@ -53,11 +53,13 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
 Dialog.propTypes = {
     createChat: PropTypes.func.isRequired,
     getAllMessages: PropTypes.func.isRequired,
-    clearSearch: PropTypes.func.isRequired
+    clearSearch: PropTypes.func.isRequired,
+    setActiveDialog: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    userData: state.login.userData
+    userData: state.login.userData,
+    activeDialogId: state.chat.activeDialogId
 });
 
-export default connect(mapStateToProps, { createChat, getAllMessages, clearSearch, getAllRooms })(Dialog);
+export default connect(mapStateToProps, { createChat, getAllMessages, clearSearch, getAllRooms, setActiveDialog })(Dialog);

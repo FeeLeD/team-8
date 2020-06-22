@@ -7,7 +7,6 @@ const Message = ({ type, content }) => {
             <div className="inLetter">
                 <span>{content}</span>
             </div>
-            {/* <span className="info">Вчера, в 14:48</span> */}
         </div>
     );
 }
