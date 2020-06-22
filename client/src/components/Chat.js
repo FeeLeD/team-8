@@ -19,7 +19,13 @@ if (localStorage.token) {
     setAuthToken(localStorage.token);
 }
 
-const URL = 'http://localhost:3000/';
+let URL; 
+if ((window.location.href.includes('localhost'))) {
+    URL = 'http://localhost:3000/';
+}
+else {
+    URL = 'https://team-8-messenger.herokuapp.com/';
+}
 
 let socket;
 
