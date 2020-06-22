@@ -7,13 +7,11 @@ import Message from './Message';
 const Messages = ({ userData: { _id, login }, socket }) => {
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        if (socket) {
-            socket.on('message', message => {
-                setMessages([...messages, message])
-            });
-        }
-    }, [messages]);
+    if (socket) {
+        socket.on('message', message => {
+            setMessages([...messages, message])
+        });
+    }
 
     return (
         <div className="messages">

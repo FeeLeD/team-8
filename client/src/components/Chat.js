@@ -19,7 +19,7 @@ if (localStorage.token) {
     setAuthToken(localStorage.token);
 }
 
-const URL = 'https://team-8-messenger.herokuapp.com/';
+const URL = 'http://localhost:3000/';
 
 let socket;
 
@@ -35,12 +35,12 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, location }) => {
         if (login)
             socket.emit('join', { login }, () => { });
 
-        socket.on('join', login => {
-            updateUsersOnline([...usersOnline, login]);
-        });
-
+            socket.on('join', login => {
+                updateUsersOnline(usersOnline => [...usersOnline, login]);
+            });
         getAllRooms();
     }, [])
+
 
     if (!isAuthenticated)
         return <Redirect to='/' />
@@ -53,7 +53,7 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, location }) => {
                     <BurgerMenu />
                     <Search />
                 </div>
-                <Dialogs socket={socket} usersOnline={usersOnline}/>
+                <Dialogs socket={socket} usersOnline={usersOnline} />
             </div>
             <div className="right">
                 <div className="status">

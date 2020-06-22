@@ -7,7 +7,8 @@ import { getAllMessages, createChat, clearSearch, getAllRooms } from '../../acti
 const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, socket, usersOnline }) => {
 
     const joinRoom = (login, roomId) => {
-        socket.emit('joinRoom', { login, roomId });
+        if (socket)
+            socket.emit('joinRoom', { login, roomId });
     }
 
     const onClick = e => {
