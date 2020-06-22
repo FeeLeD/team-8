@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getAllMessages, createChat, clearSearch, getAllRooms, setActiveDialog } from '../../actions/chat';
 
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, usersOnline, id, activeDialogId, setActiveDialog }) => {
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, id, activeDialogId, setActiveDialog }) => {
 
     const onClick = e => {
         setActiveDialog(id);
@@ -21,7 +21,7 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
     }
 
     return (
-        <div id={id} className={ id === activeDialogId ? "dialog active" : "dialog" } onClick={e => onClick(e)}>
+        <div id={id} className={id === activeDialogId ? "dialog active" : "dialog"} onClick={e => onClick(e)}>
             <div className="avatar" />
             <div className="infoDialog">
                 {
@@ -36,10 +36,7 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
                                 users.map((user, index) =>
                                     <Fragment key={index} >
                                         <span className="name">{user.login}</span>
-                                        {usersOnline.includes(user.login) ?
-                                            <p className="online">...</p> :
-                                            <p className="offline">...</p>
-                                        }
+                                        <p className="online">...</p>
                                     </Fragment>
                                 )
                             }

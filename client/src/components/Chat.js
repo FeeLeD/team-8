@@ -33,17 +33,18 @@ let socket;
 
 const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase, setAlert }) => {
     const [onlineMessages, setOnlineMessages] = useState([]);
-    const [usersOnline, updateUsersOnline] = useState([]);
     const [typing, setTyping] = useState('');
+    let joined = false;
 
     useEffect(() => {
         socket = io(URL);
-    }, [URL])
+    }, [URL]);
 
     useEffect(() => {
         const { login } = userData;
-        if (login) {
+        if (login && !joined) {
             socket.emit('join', { login });
+            joined = true;
         }
 
         socket.on('join', login => {
@@ -102,7 +103,7 @@ const Chat = ({ getAllRooms, isAuthenticated, userData, messagesFromBase, setAle
                     <BurgerMenu />
                     <Search />
                 </div>
-                <Dialogs joinRoom={joinRoom} usersOnline={usersOnline} />
+                <Dialogs joinRoom={joinRoom} />
             </div>
             <div className="right">
                 <div className="status">
