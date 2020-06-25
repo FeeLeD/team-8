@@ -67,11 +67,13 @@ const create = async (req, res) => {
     //Send email
     const transporter = nodemailer.createTransport(config.smtpConfig);
     const mailOptions = {
-      from: "dreamteammessenger@gmail.com",
-      to: email,
+      from: "Messenger",
+      to: user.email,
       subject: "Подтверждение регистрации",
-      text:
-        "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com/confirmation/" + token.token
+      html:
+        `<h1>Привет, <span style="color:blue">${user.login}</span>!</h1>
+         <h2>Вы зарегистрировались в приложении-мессендежере https://team-8-messenger.herokuapp.com/</h2>
+         <p>Для подтверждения регистрации перейдите по ссылке https://team-8-messenger.herokuapp.com/confirmation/${token.token}</p>`
     };
     transporter.sendMail(mailOptions, (err) => {
       if (err) {
@@ -211,11 +213,13 @@ const resend = async (req, res) => {
   //Send email
   const transporter = nodemailer.createTransport(config.smtpConfig);
   const mailOptions = {
-    from: "dreamteammessenger@gmail.com",
+    from: "Messenger",
     to: user.email,
     subject: "Подтверждение регистрации",
-    text:
-      "Привет!\nДля подтверждения регистрации перейди по ссылке: https://team-8-messenger.herokuapp.com/confirmation/" + token.token
+    html:
+      `<h1>Привет, <span style="color:blue">${user.login}</span>!</h1>
+       <h2>Вы зарегистрировались в приложении-мессендежере https://team-8-messenger.herokuapp.com/</h2>
+       <p>Для подтверждения регистрации перейдите по ссылке https://team-8-messenger.herokuapp.com/confirmation/${token.token}</p>`
   };
   transporter.sendMail(mailOptions, (err) => {
     if (err) {
