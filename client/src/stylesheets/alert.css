@@ -1,20 +1,36 @@
 /*DEFAULT STYLES*/
 .alert {
     position: absolute;
-    top:0;
 }
 
 .alert-danger {
+    top:0;
     background: red;
     padding: .5em;
     border-radius: 0 0 .7em  0;
 }
 
 .alert-success {
+    top:0;
     background: rgba(0, 128, 0, 0.548);
     padding: .5em;
     right: 0;
     border-radius: 0 0 0 .7em;
+}
+
+.alert-message {
+    bottom: 0;
+    right: 0;
+    margin: .5em;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 1em;
+    min-width: 10vw;
+    max-width: 30vw;
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    color: #fff;
+    font-size: 1.2em;
 }
 
 /*...*/

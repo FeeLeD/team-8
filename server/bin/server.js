@@ -20,12 +20,12 @@ io.on('connection', socket => {
     socket.join(roomId);
   });
 
-  socket.on('sendMessage', ({ login, message, roomId }) => {
-    io.to(roomId).emit('message', { sender: login, content: message })
+  socket.on('sendMessage', ({ login, message, date, roomId }) => {
+    io.to(roomId).emit('message', { sender: login, content: message, date: date, roomId: roomId })
   });
 
   socket.on('typing', ({ login, roomId }) => {
-    io.to(roomId).emit('typing', login);
+    io.to(roomId).emit('typing', {login, roomId} );
   });
 
   socket.on('stopTyping', ({ login, roomId }) => {

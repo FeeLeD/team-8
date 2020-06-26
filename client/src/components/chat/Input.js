@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addMessage } from '../../actions/chat'
+import { addMessage } from '../../actions/chat';
+import { makeDateFromNow } from '../../utils/dataCorrector';
 
 const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage, keyPressing }) => {
 
     const [messageInfo, setMessageInfo] = useState({
         login: userData.login,
         message: '',
-        roomId: currentRoomId
+        roomId: currentRoomId,
+        date: makeDateFromNow()
     });
 
     useEffect(() => {
@@ -16,9 +18,18 @@ const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage, keyPres
     }, [userData, currentRoomId]);
 
     const sendMessage = (e) => {
-        addMessage({ chatId: currentRoomId, login: userData.login, content: messageInfo.message });
         e.preventDefault();
-        sendMessageToRoom(messageInfo);
+        if (messageInfo.message !== '') {
+            setMessageInfo({ ...messageInfo, date: makeDateFromNow() });
+            addMessage({ chatId: currentRoomId, login: userData.login, content: messageInfo.message });
+            sendMessageToRoom(messageInfo);
+            setMessageInfo({
+                login: userData.login,
+                message: '',
+                roomId: currentRoomId,
+                date: makeDateFromNow()
+            })
+        }
     };
 
     if (currentRoomId === 0) {

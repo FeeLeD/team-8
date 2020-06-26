@@ -1,11 +1,13 @@
 import React from 'react';
 
-const Message = ({ type, content }) => {
+const Message = ({ type, login, content, date }) => {
     return (
-        <div className={type}>
+        <div className={"letter " + type}>
             <div className="avatar" />
-            <div className="inLetter">
+            <div className="content">
+                <span className="message-info">{login}</span>
                 <span>{content}</span>
+                <span className="message-info">{date}</span>
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ import {
     ACTIVE_DIALOG } from './constants';
 
 // Get all chat rooms
-export const getAllRooms = () => async dispatch => {
+export const getAllRooms = (cb) => async dispatch => {
     try {
         const res = await axios.get('/chat/');
 
@@ -18,6 +18,8 @@ export const getAllRooms = () => async dispatch => {
             type: GET_CHAT_ROOMS,
             payload: res.data
         });
+
+        cb(res.data);
     } catch (err) {
         console.log(err.message);
     }

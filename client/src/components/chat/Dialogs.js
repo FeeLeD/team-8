@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Dialog from './Dialog';
 
-const Dialogs = ({ rooms, users, toSearchFor, joinRoom }) => {
+const Dialogs = ({ rooms, users, toSearchFor, joinRoom, clearOnlineMessage }) => {
 
     return (
         <div className="dialogs">
@@ -21,6 +21,7 @@ const Dialogs = ({ rooms, users, toSearchFor, joinRoom }) => {
                             roomId={room._id}
                             users={room.users}
                             joinRoom={joinRoom}
+                            clearOnlineMessage={clearOnlineMessage}
                         />)
             }
         </div>

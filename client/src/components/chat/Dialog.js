@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { getAllMessages, createChat, clearSearch, getAllRooms, setActiveDialog } from '../../actions/chat';
 
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, id, activeDialogId, setActiveDialog }) => {
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, id, activeDialogId, setActiveDialog, clearOnlineMessage }) => {
 
     const onClick = e => {
+        clearOnlineMessage();
         setActiveDialog(id);
         if (user) {
             createChat(userData._id, user._id).then(res => {

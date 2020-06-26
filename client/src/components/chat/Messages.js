@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Message from './Message';
 
-const Messages = ({ userData: { login }, onlineMessages, typing }) => {
+const Messages = ({ userData: { login }, formMessageData, typing }) => {
 
     useEffect(() => {
         const messagesDiv = document.getElementById("messages");
@@ -12,14 +12,15 @@ const Messages = ({ userData: { login }, onlineMessages, typing }) => {
     })
 
     return (
-
         <div id="messages" className="messages">
             {
-                onlineMessages.map((message, index) =>
+                formMessageData().map((message, index) =>
                     <Message
                         key={index}
-                        type={message.sender === login ? "outcomingLetterWrapper" : "incomingLetterWrapper"}
+                        type={message.sender === login && "outcomingLetterWrapper"}
+                        login={message.sender === login ? "Вы" : message.sender}
                         content={message.content}
+                        date={message.date}
                     />)
             }
             {
