@@ -89,6 +89,7 @@ export default function (state = initialState, action) {
                 currentRoomId: 0,
                 messages: [],
                 onlineMessages: [],
+                typings: [],
                 users: [],
                 toSearchFor: '',
                 activeDialogId: ''

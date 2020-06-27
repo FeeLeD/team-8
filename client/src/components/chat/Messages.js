@@ -1,24 +1,27 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { clearOnlineMessages } from '../../actions/chat';
 
 import Message from './Message';
 
-const Messages = ({ userData: { login }, messagesFromBase, onlineMessages, currentRoomId, typings }) => {
+const Messages = ({ userData: { login }, messagesFromBase, onlineMessages, clearOnlineMessages, currentRoomId, typings }) => {
 
     useEffect(() => {
         const messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     })
 
-    useEffect(() => {
-        if (onlineMessages.length > 0) {
-            onlineMessages.forEach(message => {
-                if (message.roomId === currentRoomId)
-                    messagesFromBase.push(message);
-            })
-        }
-    }, [onlineMessages])
+
+    if (onlineMessages.length > 0) {
+        onlineMessages.forEach(message => {
+            if (message.roomId === currentRoomId) {
+                messagesFromBase.push(message);
+            }
+        })
+
+        clearOnlineMessages();        
+    }
 
     return (
         <Fragment>
@@ -58,4 +61,4 @@ const mapStateToProps = state => ({
     typings: state.chat.typings
 });
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps, { clearOnlineMessages })(Messages);
