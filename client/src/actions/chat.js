@@ -7,7 +7,13 @@ import {
     CLEAR_SEARCH, 
     CREATE_CHAT,
     ADD_MESSAGE,
-    ACTIVE_DIALOG } from './constants';
+    ACTIVE_DIALOG,
+    GET_ONLINE_MESSAGES,
+    CLEAR_ONLINE_MESSAGES,
+    CLEAR_CHAT_STATE,
+    ADD_TYPING,
+    STOPED_TYPING 
+} from './constants';
 
 // Get all chat rooms
 export const getAllRooms = (cb) => async dispatch => {
@@ -18,8 +24,9 @@ export const getAllRooms = (cb) => async dispatch => {
             type: GET_CHAT_ROOMS,
             payload: res.data
         });
-
-        cb(res.data);
+        
+        if (cb)
+            cb(res.data);
     } catch (err) {
         console.log(err.message);
     }
@@ -129,4 +136,37 @@ export const setActiveDialog = dialogId => dispatch => {
             dialogId: dialogId
         }
     })
+}
+
+export const setOnlineMessage = message => dispatch => {
+    dispatch({
+        type: GET_ONLINE_MESSAGES,
+        payload: {
+            message
+        }
+    })
+}
+
+export const clearOnlineMessages = () => dispatch => {
+    dispatch({ type: CLEAR_ONLINE_MESSAGES })
+}
+
+export const clearChatState = () => dispatch => {
+    dispatch({ type: CLEAR_CHAT_STATE })
+}
+
+export const addTyping = ({ login, roomId }) => dispatch => {
+    dispatch({
+        type: ADD_TYPING,
+        payload: {
+            user: {
+                login,
+                roomId
+            }
+        }
+    })
+}
+
+export const clearTyping = () => dispatch => {
+    dispatch({ type: STOPED_TYPING });
 }

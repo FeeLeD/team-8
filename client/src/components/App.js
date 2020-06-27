@@ -14,6 +14,7 @@ import store from '../store';
 import { loadUser } from '../actions/login';
 
 import '../stylesheets/reset.css';
+import '../stylesheets/loading.css';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

@@ -276,7 +276,7 @@
 .chatWrapper .right {
     height: 100%;
     display: grid;
-    grid-template-rows: 10vh 75vh 15vh;
+    grid-template-rows: 10vh 72vh 3vh 15vh;
     background-color:#FEFEFE;
 }
 /* Голова правой части */
@@ -292,9 +292,13 @@
     padding: 1em;
     overflow-y: auto;
 }
+.chatWrapper .typing-container {
+    display: flex;
+    align-items: center;
+}
 .chatWrapper .typing {
-    margin: 1em;
-    bottom: 0;
+    transition: ease-in-out .5s;
+    margin-left: 1em;
 }
 /* Входящие сообщения */
 .chatWrapper .letter {

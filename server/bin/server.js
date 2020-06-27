@@ -28,10 +28,6 @@ io.on('connection', socket => {
     io.to(roomId).emit('typing', {login, roomId} );
   });
 
-  socket.on('stopTyping', ({ login, roomId }) => {
-    io.to(roomId).emit('stopTyping', login);
-  });
-
   socket.on('disconnect', () => {
     
   });

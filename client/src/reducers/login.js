@@ -1,7 +1,9 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL, REMOVE_WRONG_DATA, USER_LOADED, AUTH_ERROR, LOGOUT } from '../actions/constants';
+import { clearChatState } from '../actions/chat';
 
 const initialState = {
     token: localStorage.getItem('token'),
+    loaded: false,
     isWrongData: false,
     isAuthenticated: false,
     userData: {},
@@ -17,6 +19,7 @@ export default (state = initialState, action) => {
                 ...state,
                 isWrongData: false,
                 isAuthenticated: true,
+                loaded: true,
                 userData: payload
             };
         case LOGIN_SUCCESS:
@@ -30,6 +33,7 @@ export default (state = initialState, action) => {
             localStorage.removeItem('token');
             return {
                 ...state,
+                loaded: false,
                 isWrongData: true,
                 isAuthenticated: false,
                 userData: {},
@@ -45,6 +49,7 @@ export default (state = initialState, action) => {
             localStorage.removeItem('token');
             return {
                 ...state,
+                loaded: false,
                 isAuthenticated: false,
                 userData: {}
             };

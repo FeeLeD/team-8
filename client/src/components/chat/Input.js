@@ -43,7 +43,7 @@ const Input = ({ userData, currentRoomId, sendMessageToRoom, addMessage, keyPres
     }
 
     return (
-        <div className="message">
+        <div id="message" className="message">
             <form className="messageForm">
                 <input
                     name="writeMessage"

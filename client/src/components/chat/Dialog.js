@@ -1,14 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAllMessages, createChat, clearSearch, getAllRooms, setActiveDialog } from '../../actions/chat';
+import { getAllMessages, createChat, clearSearch, getAllRooms, setActiveDialog, clearOnlineMessages } from '../../actions/chat';
 
 
-const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, id, activeDialogId, setActiveDialog, clearOnlineMessage }) => {
+const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, users, roomId, userData, joinRoom, id, activeDialogId, setActiveDialog, clearOnlineMessages }) => {
 
     const onClick = e => {
-        clearOnlineMessage();
-        setActiveDialog(id);
+        clearOnlineMessages();
         if (user) {
             createChat(userData._id, user._id).then(res => {
                 getAllRooms();
@@ -16,6 +15,7 @@ const Dialog = ({ createChat, clearSearch, getAllMessages, getAllRooms, user, us
             clearSearch();
         }
         else {
+            setActiveDialog(id);
             getAllMessages(roomId);
             joinRoom(userData.login, roomId);
         }
@@ -52,7 +52,8 @@ Dialog.propTypes = {
     createChat: PropTypes.func.isRequired,
     getAllMessages: PropTypes.func.isRequired,
     clearSearch: PropTypes.func.isRequired,
-    setActiveDialog: PropTypes.func.isRequired
+    setActiveDialog: PropTypes.func.isRequired,
+    clearOnlineMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -60,4 +61,4 @@ const mapStateToProps = state => ({
     activeDialogId: state.chat.activeDialogId
 });
 
-export default connect(mapStateToProps, { createChat, getAllMessages, clearSearch, getAllRooms, setActiveDialog })(Dialog);
+export default connect(mapStateToProps, { createChat, getAllMessages, clearSearch, getAllRooms, setActiveDialog, clearOnlineMessages })(Dialog);

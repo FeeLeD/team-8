@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProtTypes from 'prop-types';
@@ -6,7 +6,7 @@ import { login } from '../actions/login';
 
 import '../stylesheets/auth.css';
 
-const Auth = ({ login, isAuthenticated, isWrongData, needVerification }) => {
+const Auth = ({ login, loaded, isAuthenticated, isWrongData, needVerification }) => {
     const [data, setData] = useState({
         email: '',
         password: ''
@@ -23,11 +23,11 @@ const Auth = ({ login, isAuthenticated, isWrongData, needVerification }) => {
 
     // Redirect
     if (needVerification) {
-        return <Redirect to="/thanks"/>
+        return <Redirect to="/thanks" />
     }
 
     if (isAuthenticated) {
-        return <Redirect to="/messenger"/>
+        return <Redirect to="/messenger" />
     }
 
     return (
@@ -52,7 +52,7 @@ const Auth = ({ login, isAuthenticated, isWrongData, needVerification }) => {
                         value={password}
                         onChange={e => onChange(e)}
                         required />
-                    { isWrongData && <span className="left">Введены неверные данные</span> }
+                    {isWrongData && <span className="left">Введены неверные данные</span>}
                     <input type="submit" value="ВОЙТИ В АККАУНТ"></input>
                     <Link to="/register">
                         <span className="center">Зарегистрироваться</span>
@@ -71,7 +71,8 @@ Auth.propTypes = {
 const mapStateToProps = state => ({
     isAuthenticated: state.login.isAuthenticated,
     isWrongData: state.login.isWrongData,
-    needVerification: state.login.needVerification
+    needVerification: state.login.needVerification,
+    loaded: state.login.loaded
 });
 
 export default connect(mapStateToProps, { login })(Auth);
